@@ -1,23 +1,22 @@
 from constants import COLORS
-import json
 import numpy as np
-import os
+from process_print import process
 
-def fill_up(header,data):
+def fill_up(header, data):
     row_header=header[0]-10
     column_header=header[1]
     while(row_header>=0):
         data[row_header][column_header]=data[header[0]][header[1]]
         row_header=row_header-10
         
-def fill_down(header,data,limit):
+def fill_down(header, data, limit):
     row_header=header[0]+10
     column_header=header[1]
     while(row_header<=limit):
         data[row_header][column_header]=data[header[0]][header[1]]
         row_header=row_header+10
         
-def fill_left(header,data):
+def fill_left(header, data):
     row_header=header[0]
     column_header=header[1]-10
     while(column_header>=0):
@@ -49,22 +48,7 @@ def solve(data):
         
         
 def main():
-    train_data=None
-    script_location = os.path.dirname(os.path.abspath(__file__))
-    file_location= os.path.join(script_location, '../data/training/c444b776.json')
-
-    with open(file_location,'r') as json_file:
-        train_data=json.load(json_file)
-    
-    for data in train_data['train']:
-        input_data = np.asarray(data['input'])[:]
-        output_data = solve(input_data)
-        print(str(output_data))
-
-    for data in train_data['test']:
-        input_data = np.asarray(data['input'])[:]
-        output_data = solve(input_data)
-        print(str(output_data))
+    process('c444b776')
 
 if __name__ == '__main__':
     main()
