@@ -1,1 +1,1 @@
-COLORS={'black':0,'yellow':4}
+COLORS={'black':0,'red':2,'yellow':4}
