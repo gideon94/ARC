@@ -1,0 +1,1 @@
+COLORS={'black':0,'yellow':4}

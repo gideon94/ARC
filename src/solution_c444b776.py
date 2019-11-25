@@ -1,65 +1,70 @@
-import numpy as np
+from constants import COLORS
 import json
-train_data=''
-with open('C:/Users/GANESH/Desktop/ai_assignment/ARC/data/training/c444b776.json','r') as json_file:
-    train_data=json.load(json_file)
-input_data=np.asarray(train_data['test'][0]['input'])
+import numpy as np
+import os
 
-n_row=input_data.shape[0]
-n_col=input_data.shape[1]
-
-    
-def traverse_up(header):
-    print('traverse_up')
+def fill_up(header,data):
     row_header=header[0]-10
     column_header=header[1]
     while(row_header>=0):
-        input_data[row_header][column_header]=input_data[header[0]][header[1]]
-        row_header=row_header-9
+        data[row_header][column_header]=data[header[0]][header[1]]
+        row_header=row_header-10
         
-def traverse_down(header,limit):
-    print('traverse_down')
-    print(limit)
-    
+def fill_down(header,data,limit):
     row_header=header[0]+10
-    print(row_header)
     column_header=header[1]
     while(row_header<=limit):
-        input_data[row_header][column_header]=input_data[header[0]][header[1]]
+        data[row_header][column_header]=data[header[0]][header[1]]
         row_header=row_header+10
         
-def traverse_left(header):
-    print('traverse_left')
+def fill_left(header,data):
     row_header=header[0]
     column_header=header[1]-10
     while(column_header>=0):
-        input_data[row_header][column_header]=input_data[header[0]][header[1]]
+        data[row_header][column_header]=data[header[0]][header[1]]
         column_header=column_header-10
         
-def traverse_right(header,limit):
-    print('traverse_right')
+def fill_right(header,data,limit):
     row_header=header[0]
     column_header=header[1]+10
     while(column_header<=limit):
-        input_data[row_header][column_header]=input_data[header[0]][header[1]]
+        data[row_header][column_header]=data[header[0]][header[1]]
         column_header=column_header+10
         
+def copy(header,data,n_row,n_col):
+    fill_left(header,data)
+    fill_right(header,data,n_col)
+    fill_up(header,data)
+    fill_down(header,data,n_row)
         
-        
-def fill_data(header):
-    traverse_left(header)
-    traverse_right(header,n_col)
-    traverse_up(header)
-    traverse_down(header,n_row)
-        
-        
-def main():
+def solve(data):
+    n_row=data.shape[0]
+    n_col=data.shape[1]
     if(n_row>9 or n_col>9):
         for i in range(n_row):
             for j in range(n_col):
-                if(input_data[i][j] != 4 and input_data[i][j] != 0):
-                    fill_data((i,j))
-                    
-    print(input_data)
+                if(data[i][j] != COLORS['yellow'] and data[i][j] != COLORS['black']):
+                    copy((i,j),data,n_row,n_col)
+    return data
+        
+        
+def main():
+    train_data=None
+    script_location = os.path.dirname(os.path.abspath(__file__))
+    file_location= os.path.join(script_location, '../data/training/c444b776.json')
 
-main()
+    with open(file_location,'r') as json_file:
+        train_data=json.load(json_file)
+    
+    for data in train_data['train']:
+        input_data = np.asarray(data['input'])[:]
+        output_data = solve(input_data)
+        print(str(output_data))
+
+    for data in train_data['test']:
+        input_data = np.asarray(data['input'])[:]
+        output_data = solve(input_data)
+        print(str(output_data))
+
+if __name__ == '__main__':
+    main()
