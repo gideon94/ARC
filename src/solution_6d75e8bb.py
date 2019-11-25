@@ -1,6 +1,6 @@
 import numpy as np
 from scipy.sparse import csr_matrix
-from process_print import process
+from process_data import process
 from constants import COLORS
 
 def solve(data):
