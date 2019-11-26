@@ -1,6 +1,6 @@
 from constants import COLORS
 import numpy as np
-from process_print import process
+from process_data import process
 
 def fill_up(header, data):
     row_header=header[0]-10
