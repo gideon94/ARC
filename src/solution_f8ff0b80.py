@@ -13,7 +13,7 @@ def solve(input_data):
     sort_dict = {k: map_dict[k] for k in sorted(
         map_dict, key=map_dict.get, reverse=True)}
 
-    # Print the result list
+    # Return the result list
     result = list()
     for i in sort_dict.keys():
         result.append(i)
