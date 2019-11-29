@@ -1,26 +1,26 @@
 import numpy as np
-from scipy.sparse import csr_matrix
 from process_data import process
 from constants import COLORS
 
 def solve(data):
-    n_row = data.shape[0]
-    n_column = data.shape[1]
-    non_zero_rows=[]
-    non_zero_transposed=[]
-    for i in range(n_row):
-        if( np.any(data[i] != COLORS['black']) == True):
-            non_zero_rows.append(data[i])
-    non_zero_rows=np.asarray(non_zero_rows)
-    for i in range(n_column):
-        if( np.any(non_zero_rows[:, i] != COLORS['black']) == True):
-            non_zero_transposed.append(non_zero_rows[:, i])
-    non_zero_matrix= np.asarray(non_zero_transposed).T
-    non_zero_matrix=np.where(non_zero_matrix==COLORS['black'], COLORS['red'], non_zero_matrix)
-    return non_zero_matrix
+    # postions having non-zero elements
+    position_non_zeros = np.nonzero(data)
+    # find min and max of row and column indices to find the rectangle or sqaure shape
+    min_row_position = min(position_non_zeros[0])
+    max_row_position = max(position_non_zeros[0])
+    min_col_position = min(position_non_zeros[1])
+    max_col_position = max(position_non_zeros[1])
+
+    # tranverse through the rectangle/square and fill blacks with red
+    for i in range(min_row_position, max_row_position + 1):
+        for j in range(min_col_position, max_col_position + 1):
+            if data[i, j] == COLORS["black"]:
+                data[i, j] = COLORS["red"]
+
+    return data
 
 def main():
-    process('6d75e8bb')
+    process("6d75e8bb")
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
