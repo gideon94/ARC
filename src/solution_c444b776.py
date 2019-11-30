@@ -3,59 +3,32 @@ import numpy as np
 from process_data import process
 
 
-def fill_up(header, data):
-    row_header = header[0]-10
-    column_header = header[1]
-    while(row_header >= 0):
-        data[row_header][column_header] = data[header[0]][header[1]]
-        row_header = row_header-10
-
-
-def fill_down(header, data, limit):
-    row_header = header[0]+10
-    column_header = header[1]
-    while(row_header <= limit):
-        data[row_header][column_header] = data[header[0]][header[1]]
-        row_header = row_header+10
-
-
-def fill_left(header, data):
-    row_header = header[0]
-    column_header = header[1]-10
-    while(column_header >= 0):
-        data[row_header][column_header] = data[header[0]][header[1]]
-        column_header = column_header-10
-
-
-def fill_right(header, data, limit):
-    row_header = header[0]
-    column_header = header[1]+10
-    while(column_header <= limit):
-        data[row_header][column_header] = data[header[0]][header[1]]
-        column_header = column_header+10
-
-
-def copy(header, data, n_row, n_col):
-    fill_left(header, data)
-    fill_right(header, data, n_col)
-    fill_up(header, data)
-    fill_down(header, data, n_row)
-
-
 def solve(data):
+    # number of rows in the 2d numpy array
     n_row = data.shape[0]
+    # number of rows in the 2d numpy array
     n_col = data.shape[1]
-    if(n_row > 9 or n_col > 9):
-        for i in range(n_row):
-            for j in range(n_col):
-                if(data[i][j] != COLORS['yellow'] and data[i][j] != COLORS['black']):
-                    copy((i, j), data, n_row, n_col)
+    # postions where the colors are other than black and yellow
+    positions_filled = np.where((data != COLORS["yellow"]) & (data != COLORS["black"]))
+    # will contain key value pair of ((position in 9*9 array), value)
+    position_values = {}
+    # actual position of non-zero elements
+    positions_actual = zip(positions_filled[0], positions_filled[1])
+    # make a dictionary of {(position in 9*9 array), value} in a 9*9 matrix
+    for position in positions_actual:
+        position_values[(position[0] % 10, position[1] % 10)] = data[position]
+    # copy the value of the position from the dictionary to every 9*9 matrix
+    for i in range(n_row):
+        for j in range(n_col):
+            if ((i % 10, j % 10)) in position_values.keys():
+                data[(i, j)] = position_values[(i % 10, j % 10)]
+
     return data
 
 
 def main():
-    process('c444b776')
+    process("c444b776")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
