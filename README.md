@@ -1,3 +1,15 @@
+# Solutions for Abstraction and reasoning corpus (ARC)
+
+This is an extension on the ARC project. 
+This repository is forked from https://github.com/fchollet/ARC and provides soluion for the following tasks:
+
+f8ff0b80.json
+c444b776.json
+6d75e8bb.json
+7468f01a.json
+
+Solutions for above tasks are present in src folders with corresponding file names. The process_data.py is common file which gets the input data, processes and prints the result. Each solution files contains solve method which resolves the tasks for all training and evaluation data. 
+
 # The Abstraction and Reasoning Corpus (ARC)
 
 This repository contains the ARC task data, as well as a browser-based interface for humans to try their hand at solving the tasks manually.
@@ -7,7 +19,6 @@ This repository contains the ARC task data, as well as a browser-based interface
 A complete description of the dataset, its goals, and its underlying logic, can be found in: [The Measure of Intelligence](https://arxiv.org/abs/1911.01547).
 
 As a reminder, a test-taker is said to solve a task when, upon seeing the task for the first time, they are able to produce the correct output grid for *all* test inputs in the task (this includes picking the dimensions of the output grid). For each test input, the test-taker is allowed 3 trials (this holds for all test-takers, either humans or AI).
-
 
 ## Task file format
 
