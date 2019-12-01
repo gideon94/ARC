@@ -5,6 +5,7 @@ from constants import COLORS
 def solve(data):
     # postions having non-zero elements
     position_non_zeros = np.nonzero(data)
+    
     # find min and max of row and column indices to find the rectangle or sqaure shape
     min_row_position = min(position_non_zeros[0])
     max_row_position = max(position_non_zeros[0])
